@@ -24,9 +24,9 @@
 
 		//Параметры для фильтрации
 		$params = [
-			'filter' => ['STAGE_ID' => 'WON',
-			'>=CLOSEDATE' => $firstDayPrevMonth,
-			'<=CLOSEDATE' => $lastDayPrevMonth,
+			'filter' => ['STAGE_ID' => 'NEW',
+			'>=BEGINDATE' => $firstDayPrevMonth,
+			'<=BEGINDATE' => $lastDayPrevMonth,
 			],
 		];
 
@@ -50,10 +50,8 @@
 		$result = json_decode(curl_exec($curl), true);
 		curl_close($curl);
 		
-		var_dump ($result['result']);
-		
-		//$dealCount = count($result['result']);
-		//echo "<span style='font-weight: bold;'>Количество новых сделок за предыдущий месяц: </span>".$dealCount
+		$dealCount = count($result['result']);
+		echo "<span style='font-weight: bold;'>Количество новых сделок за предыдущий месяц: </span>".$dealCount
 	?>
 	</div>
 </body>
