@@ -46,9 +46,8 @@
 			CURLOPT_URL => $queryUrl,
 			CURLOPT_POSTFIELDS => $queryData,
 		));
-		curl_close($curl);
 		$result = json_decode(curl_exec($curl), true);
-	      
+		curl_close($curl);
 		// Я понял, что мне не нужно обрабатывать массив с данными, мне нужно только число сделок, соответствующих запросу.
 		// Колличество таких сделок можно взять из элемента total.
 		$dealCount= $result['total'];
