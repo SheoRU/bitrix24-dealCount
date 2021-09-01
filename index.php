@@ -8,7 +8,7 @@
 			text-align: center;
 			font-size: 30px;
 			height:500px;
-			line-height:500px;
+			
 		}
 	</style>
 </head>
@@ -18,13 +18,13 @@
 		//Метод к которому обращаемся c помощью API
 		$method = "crm.deal.list";
 
-		//Получаем текущий год и первый и последнйи день предыдущего месяца
+		//Получаем текущий год и первый и последний день предыдущего месяца
 		$firstDayPrevMonth = date("Y-m-d", strtotime("first day of previous month"));
 		$lastDayPrevMonth = date("Y-m-d", strtotime("last day of previous month"));
 
 		//Параметры для фильтрации
 		$params = [
-			'filter' => ['STAGE_ID' => 'NEW',
+			'filter' => [
 			'>=BEGINDATE' => $firstDayPrevMonth,
 			'<=BEGINDATE' => $lastDayPrevMonth,
 			],
@@ -46,11 +46,13 @@
 			CURLOPT_URL => $queryUrl,
 			CURLOPT_POSTFIELDS => $queryData,
 		));
-
-		$result = json_decode(curl_exec($curl), true);
 		curl_close($curl);
-		
-		$dealCount = count($result['result']);
+		$result = json_decode(curl_exec($curl), true);
+	      
+		// Я понял, что мне не нужно обрабатывать массив с данными, мне нужно только число сделок, соответствующих запросу.
+		// Колличество таких сделок можно взять из элемента total.
+		$dealCount= $result['total'];
+
 		echo "<span style='font-weight: bold;'>Количество новых сделок за предыдущий месяц: </span>".$dealCount
 	?>
 	</div>
